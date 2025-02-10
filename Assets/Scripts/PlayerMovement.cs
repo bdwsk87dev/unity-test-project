@@ -21,26 +21,22 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        // Проверяем, стоит ли персонаж на земле с помощью OverlapSphere
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
         if (isGrounded && velocity.y < 0)
         {
-            velocity.y = -2f; // Небольшое значение, чтобы персонаж не "дрожал" на земле
+            velocity.y = -2f;
         }
 
-        // Движение влево-вправо
         float move = Input.GetAxis("Horizontal");
         Vector3 moveDirection = transform.right * move;
         controller.Move(moveDirection * speed * Time.deltaTime);
 
-        // Прыжок
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
 
-        // Применяем гравитацию
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
     }
